@@ -1,23 +1,24 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Intranet | Inicio')
+
+@section('content_header')
+@stop
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+   
+@stop
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
+@section('footer')
+    <div class="float-right d-none d-sm-inline">
+        Intranet
     </div>
-</div>
-@endsection
+    <strong>Copyright © <a class="text-primary">nandresdev</a>.</strong>
+@stop
+
+@section('css')
+@stop
+
+@section('js')
+    <script></script>
+@stop
