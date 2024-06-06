@@ -36,14 +36,14 @@ Sigue estos pasos para configurar y ejecutar el proyecto en tu entorno local.
 Clona el código del proyecto utilizando el siguiente comando:
 
 ```sh
-git clone https://github.com/nandresdev/net-jardin-infantil.git
+git clone https://github.com/nandresdev/net-gestion-vehiculos-conductores.git
 ```
 
 ### 2. Navega a la carpeta del proyecto
 Una vez clonado, accede al directorio del proyecto:
 
 ```sh
-cd net-jardin-infantil
+cd net-gestion-vehiculos-conductores
 ```
 
 ### 3. Instala las dependencias del proyecto
