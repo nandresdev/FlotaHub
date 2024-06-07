@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('marca');
             $table->string('modelo');
             $table->string('combustible');
-            $table->int('ano');
+            $table->string('ano');
             $table->string('traccion');
             $table->string('color');
             $table->string('numero_motor');
