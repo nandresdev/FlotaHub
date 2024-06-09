@@ -12,6 +12,7 @@
 
     <form id="formularioDeVehiculo">
         @csrf
+        @method('PUT')
         <div class="card-body">
             <div class="form-group">
                 <label for="tipo_vehiculo">Tipo de Vehículo</label>

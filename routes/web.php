@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConductoresController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -46,4 +47,13 @@ Route::group(['prefix' => 'vehiculos', 'middleware' => 'auth'], function () {
     Route::get('/vehiculo/{vehiculo}', [VehiculosController::class, "edit"])->name("vehiculo.edit");
     Route::put('/{vehiculo}', [VehiculosController::class, "update"])->name("vehiculo.update");
     Route::delete('/{vehiculo}', [VehiculosController::class, "destroy"])->name("vehiculo.destroy");
+});
+
+Route::group(['prefix' => 'conductores', 'middleware' => 'auth'], function () {
+    Route::get('/', [ConductoresController::class, "index"])->name("conductor.index");
+    Route::get('/crear', [ConductoresController::class, "create"])->name("conductor.create");
+    Route::post('/', [ConductoresController::class, "store"])->name("conductor.store");
+    Route::get('/conductor/{conductor}', [ConductoresController::class, "edit"])->name("conductor.edit");
+    Route::put('/{conductor}', [ConductoresController::class, "update"])->name("conductor.update");
+    Route::delete('/{conductor}', [ConductoresController::class, "destroy"])->name("conductor.destroy");
 });
