@@ -1,5 +1,8 @@
 @extends('adminlte::page')
 
+@section('plugins.Datatables', true)
+@section('plugins.Sweetalert2', true)
+
 @section('title', 'Intranet | Registros De Servicios')
 
 @section('content_header')
@@ -24,8 +27,8 @@
                 <table class="table table-bordered" id="datatableServicio">
                     <thead class="bg-primary">
                         <tr>
-                            <th>NOMBRE</th>
                             <th>ACCIÓN</th>
+                            <th>NOMBRE</th>
                         </tr>
                         <tr class="filters">
                             <th><input type="text" class="form-control" placeholder="Nombre" /></th>
@@ -35,19 +38,24 @@
                     <tbody>
                         @foreach ($servicios as $servicio)
                             <tr>
-                                <td>{{ $servicio->nombre }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="" class="btn btn-success btn-sm" data-toggle="modal"
-                                            data-target="#editarServicioModal{{ $servicio->id }}">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a class="btn btn-danger btn-sm"
-                                            onclick="confirmarEliminacionDelServicio('{{ $servicio->id }}')">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton{{ $servicio->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Acciones
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $servicio->id }}">
+                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarServicioModal{{ $servicio->id }}">
+                                                    <i class="fas fa-edit"></i> Editar Servicio
+                                                </a>
+                                                <a class="dropdown-item" href="#" onclick="confirmarEliminacionDelServicio('{{ $servicio->id }}')">
+                                                    <i class="fas fa-trash-alt"></i> Eliminar Servicio
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
+                                <td>{{ $servicio->nombre }}</td>
                             </tr>
                             <!-- Modal de Modificar -->
                             <div class="modal fade" id="editarServicioModal{{ $servicio->id }}" tabindex="-1"
@@ -109,7 +117,6 @@
             </div>
         </div>
     </div>
-
 @stop
 
 @section('footer')
@@ -120,18 +127,10 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
 @stop
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 
     <script>
         $(document).ready(function() {
