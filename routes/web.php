@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\VehiculosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +37,13 @@ Route::group(['prefix' => 'servicios', 'middleware' => 'auth'], function () {
     Route::post('/', [ServicioController::class, "store"])->name("servicio.store");
     Route::put('/{servicio}', [ServicioController::class, "update"])->name("servicio.update");
     Route::delete('/{servicio}', [ServicioController::class, "destroy"])->name("servicio.destroy");
+});
+
+Route::group(['prefix' => 'vehiculos', 'middleware' => 'auth'], function () {
+    Route::get('/', [VehiculosController::class, "index"])->name("vehiculo.index");
+    Route::get('/crear', [VehiculosController::class, "create"])->name("vehiculo.create");
+    Route::post('/', [VehiculosController::class, "store"])->name("vehiculo.store");
+    Route::get('/vehiculo/{vehiculo}', [VehiculosController::class, "edit"])->name("vehiculo.edit");
+    Route::put('/{vehiculo}', [VehiculosController::class, "update"])->name("vehiculo.update");
+    Route::delete('/{vehiculo}', [VehiculosController::class, "destroy"])->name("vehiculo.destroy");
 });
