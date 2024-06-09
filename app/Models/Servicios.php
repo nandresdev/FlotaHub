@@ -23,4 +23,9 @@ class Servicios extends Model
     {
         return $this->hasMany(Conductores::class, "id_servicios");
     }
+
+    public function documentosServicio()
+    {
+        return $this->hasMany(DocumentosServicios::class, "id_servicios");
+    }
 }

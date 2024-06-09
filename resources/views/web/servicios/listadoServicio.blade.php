@@ -59,6 +59,12 @@
                                                     href="{{ route('servicio.obtenerVehiculos', $servicio->id) }}">
                                                     <i class="fas fa-car"></i> Ver Vehículos
                                                 </a>
+                                                <a class="dropdown-item"  href="{{ route('documentosServicios.obtenerConductores', $servicio->id) }}">
+                                                    <i class="fas fa fa-file"></i> Documentos Conductores
+                                                </a>
+                                                <a class="dropdown-item"  href="{{ route('documentosServicios.obtenerVehiculos', $servicio->id) }}">
+                                                    <i class="fas fa fa-file"></i> Documentos Vehiculos
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

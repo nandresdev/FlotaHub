@@ -2,49 +2,51 @@
 
 @section('plugins.Datatables', true)
 @section('plugins.Sweetalert2', true)
-@section('title', 'Intranet | Registros De Usuarios')
+@section('title', 'Intranet | Registros De Documentos')
 
 @section('content_header')
-    <h1>Listado de Usuarios</h1>
+    <h1>Listado de Documentos Conductores</h1>
 @stop
 
 @section('content')
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
-                <button class="btn btn-primary" onclick="window.location='{{ route('usuario.create') }}'">
-                    Nuevo Usuario
+                <button class="btn btn-primary" data-toggle="modal" data-target="#nuevoDocumentoModal">
+                    Nuevo Documento
                 </button>
             </div>
             <div class="table-responsive" id="scroll-footer-table" style="margin-bottom: 20px;">
                 <table class="table table-bordered" id="datatableUsuario">
                     <thead class="bg-primary">
                         <tr>
-                            <th>NOMBRE COMPLETO</th>
-                            <th>CORREO ELECTRÓNICO</th>
-                            <th>CARGO</th>
+                            <th>SERVICIOS</th>
+                            <th>TIPO</th>
+                            <th>NOMBRE</th>
                             <th>ACCIÓN</th>
                         </tr>
                         <tr class="filters">
-                            <th><input type="text" class="form-control" placeholder="Nombre Completo" /></th>
-                            <th><input type="text" class="form-control" placeholder="Correo Electrónico" /></th>
-                            <th><input type="text" class="form-control" placeholder="Cargo" /></th>
+                            <th><input type="text" class="form-control" placeholder="Servicio" /></th>
+                            <th><input type="text" class="form-control" placeholder="Tipo" /></th>
+                            <th><input type="text" class="form-control" placeholder="Nombre" /></th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($usuarios as $usuario)
+                        @foreach ($doucmentosServicios as $doucmentosServicio)
                             <tr>
-                                <td>{{ $usuario->name }}</td>
-                                <td>{{ $usuario->email }}</td>
+                                <td>{{ $doucmentosServicio->tipo }}</td>
+                                <td>{{ $doucmentosServicio->tipo }}</td>
+                                <td>{{ $doucmentosServicio->nombre }}</td>
                                 <td></td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('usuario.edit', $usuario->id) }}" class="btn btn-success btn-sm">
+                                        <a href="{{ route('doucmentosServicios.edit', $doucmentosServicio->id) }}"
+                                            class="btn btn-success btn-sm">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <a class="btn btn-danger btn-sm"
-                                            onclick="confirmarEliminacionDelUsuario('{{ $usuario->id }}')">
+                                            onclick="confirmarEliminacionDelUsuario('{{ $doucmentosServicio->id }}')">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </div>
@@ -53,6 +55,29 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="modal fade" id="nuevoDocumentoModal" tabindex="-1" role="dialog"
+                    aria-labelledby="servicioModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <form id="formularioDeDocumento">
+                            @csrf
+                            <div class="modal-content">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre</label>
+                                        <input type="text" class="form-control" id="nombre"
+                                            placeholder="Nombre Servicio" name="nombre" value="{{ old('nombre') }}">
+                                        <div class="invalid-feedback" id="inputValidacionNombre"></div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" id="botonDeCreacion"
+                                        onclick="registrarServicio()">Registrar Documento</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
