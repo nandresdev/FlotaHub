@@ -12,12 +12,6 @@
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
-                <button class="btn btn-success" onclick="window.location=''">
-                    Exportar a Excel
-                </button>
-                <button class="btn btn-danger" onclick="window.location=''">
-                    Exportar a PDF
-                </button>
                 <button class="btn btn-primary" onclick="window.location='{{ route('vehiculo.create') }}'">
                     Nuevo Vehiculo
                 </button>
@@ -37,6 +31,7 @@
                             <th>NRO DE MOTOR</th>
                             <th>NRO DE CHASIS</th>
                             <th>KILOMETRAJE</th>
+                            <th>SERVICIO</th>
                             <th>ACCIÓN</th>
                         </tr>
                         <tr class="filters">
@@ -51,6 +46,7 @@
                             <th><input type="text" class="form-control" placeholder="Nro de Motor" /></th>
                             <th><input type="text" class="form-control" placeholder="Nro de Chasis" /></th>
                             <th><input type="text" class="form-control" placeholder="Kilometraje" /></th>
+                            <th><input type="text" class="form-control" placeholder="Servicio" /></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -68,6 +64,7 @@
                                 <td>{{ $vehiculo->numero_motor }}</td>
                                 <td>{{ $vehiculo->numero_chasis }}</td>
                                 <td>{{ $vehiculo->kilometraje }}</td>
+                                <td>{{ $vehiculo->servicios->nombre }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('vehiculo.edit', $vehiculo->id) }}"

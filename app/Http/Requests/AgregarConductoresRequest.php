@@ -18,6 +18,8 @@ class AgregarConductoresRequest extends FormRequest
             'fecha_nacimiento' => 'required|date|max:255',
             'telefono' => 'required|string|max:255',
             'nacionalidad' => 'required|string|max:255',
+            'id_servicios' => 'required|string|max:255',
+
         ];
     }
 
@@ -28,7 +30,7 @@ class AgregarConductoresRequest extends FormRequest
             'fecha_nacimiento' => 'fecha nacimiento',
             'telefono' => 'telefono',
             'nacionalidad' => 'nacionalidad',
-
+            'id_servicios' => 'servicio',
         ];
     }
 
@@ -39,6 +41,7 @@ class AgregarConductoresRequest extends FormRequest
             'fecha_nacimiento.required' => 'El campo :attribute es obligatorio.',
             'telefono.required' => 'El campo :attribute es obligatorio.',
             'nacionalidad.required' => 'El campo :attribute es obligatorio.',
+            'id_servicios.required' => 'El campo :attribute es obligatorio.',
         ];
     }
 }

@@ -12,12 +12,6 @@
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
-                <button class="btn btn-success" onclick="window.location=''">
-                    Exportar a Excel
-                </button>
-                <button class="btn btn-danger" onclick="window.location=''">
-                    Exportar a PDF
-                </button>
                 <button class="btn btn-primary" onclick="window.location='{{ route('usuario.create') }}'">
                     Nuevo Usuario
                 </button>

@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('numero_motor');
             $table->string('numero_chasis');
             $table->string('kilometraje')->nullable();
+            $table->unsignedBigInteger('id_servicios')->nullable();
+            $table->foreign("id_servicios")->references("id")->on("servicios")->onUpdate("cascade");
             $table->timestamps();
         });
     }

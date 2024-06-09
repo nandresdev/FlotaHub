@@ -14,5 +14,11 @@ class Conductores extends Model
         'fecha_nacimiento',
         'telefono',
         'nacionalidad',
+        'id_servicios',
     ];
+
+    public function servicios()
+    {
+        return $this->belongsTo(Servicios::class,"id_servicios");
+    }
 }

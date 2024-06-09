@@ -13,19 +13,24 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documentos_vehiculos', function (Blueprint $table) {
+        Schema::create('documentos_conductores', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_documento_servicio')->nullable();
-            $table->unsignedBigInteger('id_vehiculos')->nullable();
+            $table->unsignedBigInteger('id_conductores')->nullable();
             $table->foreign("id_documento_servicio")->references("id")->on("documentos_servicios")->onUpdate("cascade");
-            $table->foreign("id_vehiculos")->references("id")->on("vehiculos")->onUpdate("cascade");
+            $table->foreign("id_conductores")->references("id")->on("conductores")->onUpdate("cascade");
+            $table->date('fecha_vencimiento')->nullable();
             $table->timestamps();
         });
     }
 
-  
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::dropIfExists('documentos_vehiculos');
+        Schema::dropIfExists('documentos_conductores');
     }
 };

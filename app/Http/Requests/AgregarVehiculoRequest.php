@@ -26,6 +26,7 @@ class AgregarVehiculoRequest extends FormRequest
             'numero_motor' => 'required|string|max:255',
             'numero_chasis' => 'required|string|max:255',
             'kilometraje' => 'required|string|max:255',
+            'id_servicios' => 'required|string|max:255',
         ];
     }
 
@@ -43,6 +44,8 @@ class AgregarVehiculoRequest extends FormRequest
             'numero_motor' => 'numero de motor',
             'numero_chasis' => 'numero de chasis',
             'kilometraje' => 'kilometraje',
+            'id_servicios' => 'servicio',
+
         ];
     }
 
@@ -59,6 +62,8 @@ class AgregarVehiculoRequest extends FormRequest
             'color.required' => 'El campo :attribute es obligatorio.',
             'numero_motor.required' => 'El campo :attribute es obligatorio.',
             'numero_chasis.required' => 'El campo :attribute es obligatorio.',
+            'id_servicios.required' => 'El campo :attribute es obligatorio.',
+
         ];
     }
 }

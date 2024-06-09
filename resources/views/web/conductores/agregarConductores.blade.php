@@ -16,33 +16,53 @@
         <div class="card-body">
             <div class="form-group">
                 <label for="nombre_completo">Nombre Completo</label>
-                <input type="text" class="form-control" id="campoNombreCompleto" placeholder="Nombre Completo" name="nombre_completo"
-                    value="{{ old('nombre_completo') }}">
+                <input type="text" class="form-control" id="campoNombreCompleto" placeholder="Nombre Completo"
+                    name="nombre_completo" value="{{ old('nombre_completo') }}">
                 <div class="invalid-feedback" id="inputValidacionNombreCompleto">
                 </div>
             </div>
             <div class="form-group">
                 <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" id="campoFechaNacimiento" placeholder="Marca" name="fecha_nacimiento"
-                    value="{{ old('fecha_nacimiento') }}">
+                <input type="date" class="form-control" id="campoFechaNacimiento" placeholder="Marca"
+                    name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}">
                 <div class="invalid-feedback" id="inputValidacionFechaNacimiento">
                 </div>
             </div>
             <div class="form-group">
                 <label for="modelo">Teléfono</label>
                 <input type="text" class="form-control" id="campoTelefono" placeholder="Teléfono" name="telefono"
-                    value="{{ old('telefono') }}" onkeypress="return isNumberKey(event)" oninput="validateNumberInput(this)">
+                    value="{{ old('telefono') }}" onkeypress="return isNumberKey(event)"
+                    oninput="validateNumberInput(this)">
                 <div class="invalid-feedback" id="inputValidacionTelefono">
                 </div>
             </div>
             <div class="form-group">
                 <label for="modelo">Nacionalidad</label>
-                <input type="text" class="form-control" id="campoNacionalidad" placeholder="Nacionalidad" name="nacionalidad"
-                    value="{{ old('nacionalidad') }}">
+                <input type="text" class="form-control" id="campoNacionalidad" placeholder="Nacionalidad"
+                    name="nacionalidad" value="{{ old('nacionalidad') }}">
                 <div class="invalid-feedback" id="inputValidacionNacionalidad">
                 </div>
             </div>
-    
+            <div class="form-group">
+                <label for="modelo">Servicios</label>
+                <select class="form-control"
+                id="campoServicio" name="id_servicios"
+                data-live-search="true">
+                <option value="">--Seleccionar Servicio--</option>
+                @foreach ($servicios as $servicio)
+                    @if (old('id_servicios') == $servicio->id)
+                        <option selected value="{{ $servicio->id }}">
+                            {{ $servicio->nombre }}</option>
+                    @else
+                        <option value="{{ $servicio->id }}">
+                            {{ $servicio->nombre }}</option>
+                    @endif
+                @endforeach
+            </select>
+                <div class="invalid-feedback" id="inputValidacionServicios">
+                </div>
+            </div>
+
         </div>
 
         <div class="card-footer">
@@ -68,7 +88,7 @@
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-            function isNumberKey(evt) {
+        function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : evt.keyCode;
             if (charCode > 31 && (charCode < 48 || charCode > 57)) {
                 return false;
@@ -79,11 +99,12 @@
         function validateNumberInput(input) {
             input.value = input.value.replace(/[^0-9]/g, '');
         }
-        
+
         function validarCampos(data) {
             if (typeof data.responseJSON.errors.nombre_completo !== 'undefined') {
                 document.getElementById("campoNombreCompleto").setAttribute("class", "form-control is-invalid");
-                document.getElementById("inputValidacionNombreCompleto").innerHTML = data.responseJSON.errors.nombre_completo;
+                document.getElementById("inputValidacionNombreCompleto").innerHTML = data.responseJSON.errors
+                    .nombre_completo;
             } else {
                 document.getElementById("campoNombreCompleto").setAttribute("class", "form-control is-valid");
                 document.getElementById("inputValidacionNombreCompleto").innerHTML = "";
@@ -91,7 +112,8 @@
 
             if (typeof data.responseJSON.errors.fecha_nacimiento !== 'undefined') {
                 document.getElementById("campoFechaNacimiento").setAttribute("class", "form-control is-invalid");
-                document.getElementById("inputValidacionFechaNacimiento").innerHTML = data.responseJSON.errors.fecha_nacimiento;
+                document.getElementById("inputValidacionFechaNacimiento").innerHTML = data.responseJSON.errors
+                    .fecha_nacimiento;
             } else {
                 document.getElementById("campoFechaNacimiento").setAttribute("class", "form-control is-valid");
                 document.getElementById("inputValidacionFechaNacimiento").innerHTML = "";
@@ -111,6 +133,14 @@
             } else {
                 document.getElementById("campoNacionalidad").setAttribute("class", "form-control is-valid");
                 document.getElementById("inputValidacionNacionalidad").innerHTML = "";
+            }
+
+            if (typeof data.responseJSON.errors.id_servicios !== 'undefined') {
+                document.getElementById("campoServicio").setAttribute("class", "form-control is-invalid");
+                document.getElementById("inputValidacionServicios").innerHTML = data.responseJSON.errors.id_servicios;
+            } else {
+                document.getElementById("campoServicio").setAttribute("class", "form-control is-valid");
+                document.getElementById("inputValidacionServicios").innerHTML = "";
             }
         }
 

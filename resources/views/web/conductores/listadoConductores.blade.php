@@ -12,12 +12,6 @@
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
-                <button class="btn btn-success" onclick="window.location=''">
-                    Exportar a Excel
-                </button>
-                <button class="btn btn-danger" onclick="window.location=''">
-                    Exportar a PDF
-                </button>
                 <button class="btn btn-primary" onclick="window.location='{{ route('conductor.create') }}'">
                     Nuevo Conductor
                 </button>
@@ -30,6 +24,7 @@
                             <th>FECHA DE NACIMIENTO</th>
                             <th>TELÉFONO</th>
                             <th>NACIONALIDAD</th>
+                            <th>SERVICIO</th>
                             <th>ACCIÓN</th>
                         </tr>
                         <tr class="filters">
@@ -37,6 +32,7 @@
                             <th><input type="date" class="form-control" placeholder="Fecha Nacimiento" /></th>
                             <th><input type="text" class="form-control" placeholder="Teléfono" /></th>
                             <th><input type="text" class="form-control" placeholder="Nacionalidad" /></th>
+                            <th><input type="text" class="form-control" placeholder="Servicio" /></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -47,6 +43,7 @@
                                 <td>{{ $conductor->fecha_nacimiento }}</td>
                                 <td>{{ $conductor->telefono }}</td>
                                 <td>{{ $conductor->nacionalidad }}</td>
+                                <td>{{ $conductor->servicios->nombre }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('conductor.edit', $conductor->id) }}"

@@ -304,11 +304,6 @@ return [
             'url' => 'vehiculos/',
             'icon' => 'fas fa fa-truck',
         ],
-        [
-            'text' => 'Documentos',
-            'url' => 'documentos/',
-            'icon' => 'fas fa-file',
-        ],
     ],
 
     /*

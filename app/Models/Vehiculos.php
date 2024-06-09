@@ -22,5 +22,11 @@ class Vehiculos extends Model
         'numero_motor',
         'numero_chasis',
         'kilometraje',
+        'id_servicios',
     ];
+
+    public function servicios()
+    {
+        return $this->belongsTo(Servicios::class,"id_servicios");
+    }
 }

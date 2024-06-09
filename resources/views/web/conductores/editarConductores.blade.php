@@ -44,7 +44,20 @@
                 <div class="invalid-feedback" id="inputValidacionNacionalidad">
                 </div>
             </div>
-
+            <div class="form-group">
+                <label for="modelo">Servicios</label>
+                <select class="form-control" id="campoServicio" name="id_servicios" data-live-search="true">
+                    <option value="">--Seleccionar Servicio--</option>
+                    @foreach ($servicios as $servicio)
+                        <option value="{{ $servicio->id }}"
+                            {{ old('id_servicios', $conductor->id_servicios) == $servicio->id ? 'selected' : '' }}>
+                            {{ $servicio->nombre }}
+                        </option>
+                    @endforeach
+                </select>
+                <div class="invalid-feedback" id="inputValidacionServicios">
+                </div>
+            </div>
         </div>
 
         <div class="card-footer">
@@ -115,6 +128,14 @@
             } else {
                 document.getElementById("campoNacionalidad").setAttribute("class", "form-control is-valid");
                 document.getElementById("inputValidacionNacionalidad").innerHTML = "";
+            }
+
+            if (typeof data.responseJSON.errors.id_servicios !== 'undefined') {
+                document.getElementById("campoServicio").setAttribute("class", "form-control is-invalid");
+                document.getElementById("inputValidacionServicios").innerHTML = data.responseJSON.errors.id_servicios;
+            } else {
+                document.getElementById("campoServicio").setAttribute("class", "form-control is-valid");
+                document.getElementById("inputValidacionServicios").innerHTML = "";
             }
         }
 

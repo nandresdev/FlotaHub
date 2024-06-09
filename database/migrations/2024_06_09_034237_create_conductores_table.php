@@ -19,11 +19,17 @@ return new class extends Migration
             $table->date('fecha_nacimiento');
             $table->string('telefono');
             $table->string('nacionalidad');
+            $table->unsignedBigInteger('id_servicios')->nullable();
+            $table->foreign("id_servicios")->references("id")->on("servicios")->onUpdate("cascade");
             $table->timestamps();
         });
     }
 
-
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('conductores');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AgregarConductoresRequest;
 use App\Http\Requests\EditarConductoresRequest;
 use App\Models\Conductores;
+use App\Models\Servicios;
 use Illuminate\Http\Request;
 
 class ConductoresController extends Controller
@@ -24,7 +25,10 @@ class ConductoresController extends Controller
 
     public function create()
     {
-        return view('web.conductores.agregarConductores');
+        $servicios = Servicios::all();
+        return view("web.conductores.agregarConductores", [
+            "servicios" => $servicios
+        ]);
     }
 
     public function store(AgregarConductoresRequest $request)
@@ -34,6 +38,7 @@ class ConductoresController extends Controller
         $conductor->fecha_nacimiento = $request->input('fecha_nacimiento');
         $conductor->telefono = $request->input('telefono');
         $conductor->nacionalidad = $request->input('nacionalidad');
+        $conductor->id_servicios = $request->input('id_servicios');
         $conductor->save();
 
         return response()->json($conductor);
@@ -41,10 +46,12 @@ class ConductoresController extends Controller
 
     public function edit($id)
     {
+        $servicios = Servicios::all();
         $conductor = Conductores::findOrFail($id);
-
         return view('web.conductores.editarConductores', [
-            "conductor" => $conductor
+            "conductor" => $conductor,
+            "servicios" => $servicios
+
         ]);
     }
 
@@ -55,6 +62,7 @@ class ConductoresController extends Controller
         $conductor->fecha_nacimiento = $request->input('fecha_nacimiento');
         $conductor->telefono = $request->input('telefono');
         $conductor->nacionalidad = $request->input('nacionalidad');
+        $conductor->id_servicios = $request->input('id_servicios');
         $conductor->save();
 
         return response()->json($conductor);

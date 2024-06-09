@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AgregarVehiculoRequest;
-use App\Http\Requests\EditarVehiculoRequest;
+use App\Models\Servicios;
 use App\Models\Vehiculos;
 use Illuminate\Http\Request;
+use App\Http\Requests\EditarVehiculoRequest;
+use App\Http\Requests\AgregarVehiculoRequest;
 
 class VehiculosController extends Controller
 {
@@ -25,7 +26,11 @@ class VehiculosController extends Controller
 
     public function create()
     {
-        return view('web.vehiculos.agregarVehiculo');
+        $servicios = Servicios::all();
+        return view("web.vehiculos.agregarVehiculo", [
+            "servicios" => $servicios
+        ]);
+
     }
 
     public function store(AgregarVehiculoRequest $request)
@@ -42,6 +47,7 @@ class VehiculosController extends Controller
         $vehiculo->numero_motor = $request->input('numero_motor');
         $vehiculo->numero_chasis = $request->input('numero_chasis');
         $vehiculo->kilometraje = $request->input('kilometraje');
+        $vehiculo->id_servicios = $request->input('id_servicios');
         $vehiculo->save();
 
         return response()->json($vehiculo);
@@ -50,9 +56,10 @@ class VehiculosController extends Controller
     public function edit($id)
     {
         $vehiculo = Vehiculos::findOrFail($id);
-
+        $servicios = Servicios::all();
         return view('web.vehiculos.editarVehiculo', [
-            "vehiculo" => $vehiculo
+            "vehiculo" => $vehiculo,
+            "servicios" => $servicios
         ]);
     }
 
@@ -70,6 +77,7 @@ class VehiculosController extends Controller
         $vehiculo->numero_motor = $request->input('numero_motor');
         $vehiculo->numero_chasis = $request->input('numero_chasis');
         $vehiculo->kilometraje = $request->input('kilometraje');
+        $vehiculo->id_servicios = $request->input('id_servicios');
         $vehiculo->save();
 
         return response()->json($vehiculo);

@@ -99,6 +99,25 @@
                 <div class="invalid-feedback" id="inputValidacionNumeroKilometraje">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="modelo">Servicios</label>
+                <select class="form-control"
+                id="campoServicio" name="id_servicios"
+                data-live-search="true">
+                <option value="">--Seleccionar Servicio--</option>
+                @foreach ($servicios as $servicio)
+                    @if (old('id_servicios') == $servicio->id)
+                        <option selected value="{{ $servicio->id }}">
+                            {{ $servicio->nombre }}</option>
+                    @else
+                        <option value="{{ $servicio->id }}">
+                            {{ $servicio->nombre }}</option>
+                    @endif
+                @endforeach
+            </select>
+                <div class="invalid-feedback" id="inputValidacionServicios">
+                </div>
+            </div>
         </div>
 
         <div class="card-footer">
@@ -224,6 +243,14 @@
             } else {
                 document.getElementById("campoKilometraje").setAttribute("class", "form-control is-valid");
                 document.getElementById("inputValidacionNumeroKilometraje").innerHTML = "";
+            }
+
+            if (typeof data.responseJSON.errors.id_servicios !== 'undefined') {
+                document.getElementById("campoServicio").setAttribute("class", "form-control is-invalid");
+                document.getElementById("inputValidacionServicios").innerHTML = data.responseJSON.errors.id_servicios;
+            } else {
+                document.getElementById("campoServicio").setAttribute("class", "form-control is-valid");
+                document.getElementById("inputValidacionServicios").innerHTML = "";
             }
         }
 

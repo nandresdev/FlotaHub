@@ -13,4 +13,14 @@ class Servicios extends Model
     protected $fillable = [
         'nombre',
     ];
+
+    public function vehiculo()
+    {
+        return $this->hasMany(Vehiculos::class, "id_servicios");
+    }
+
+    public function conductor()
+    {
+        return $this->hasMany(Conductores::class, "id_servicios");
+    }
 }

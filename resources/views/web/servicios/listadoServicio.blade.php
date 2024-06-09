@@ -13,12 +13,6 @@
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
-                <button class="btn btn-success" onclick="window.location=''">
-                    Exportar a Excel
-                </button>
-                <button class="btn btn-danger" onclick="window.location=''">
-                    Exportar a PDF
-                </button>
                 <button class="btn btn-primary" data-toggle="modal" data-target="#nuevoServicioModal">
                     Nuevo Servicio
                 </button>
@@ -27,8 +21,8 @@
                 <table class="table table-bordered" id="datatableServicio">
                     <thead class="bg-primary">
                         <tr>
-                            <th>ACCIÓN</th>
                             <th>NOMBRE</th>
+                            <th>ACCIÓN</th>
                         </tr>
                         <tr class="filters">
                             <th><input type="text" class="form-control" placeholder="Nombre" /></th>
@@ -38,6 +32,7 @@
                     <tbody>
                         @foreach ($servicios as $servicio)
                             <tr>
+                                <td>{{ $servicio->nombre }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <div class="dropdown">
@@ -51,11 +46,22 @@
                                                 <a class="dropdown-item" href="#" onclick="confirmarEliminacionDelServicio('{{ $servicio->id }}')">
                                                     <i class="fas fa-trash-alt"></i> Eliminar Servicio
                                                 </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fas fa-address-card"></i> Ver Conductores
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fas fa fa-truck"></i> Ver Vehiculos
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fas fa fa-file"></i> Documentos Conductores
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fas fa fa-file"></i> Documentos Vehiculos
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ $servicio->nombre }}</td>
                             </tr>
                             <!-- Modal de Modificar -->
                             <div class="modal fade" id="editarServicioModal{{ $servicio->id }}" tabindex="-1"
