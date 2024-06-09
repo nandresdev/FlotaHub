@@ -36,27 +36,28 @@
                                 <td>
                                     <div class="btn-group">
                                         <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton{{ $servicio->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Acciones
+                                            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button"
+                                                id="dropdownMenuButton{{ $servicio->id }}" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                Opciones
                                             </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $servicio->id }}">
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#editarServicioModal{{ $servicio->id }}">
+                                            <div class="dropdown-menu"
+                                                aria-labelledby="dropdownMenuButton{{ $servicio->id }}">
+                                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                                    data-target="#editarServicioModal{{ $servicio->id }}">
                                                     <i class="fas fa-edit"></i> Editar Servicio
                                                 </a>
-                                                <a class="dropdown-item" href="#" onclick="confirmarEliminacionDelServicio('{{ $servicio->id }}')">
+                                                <a class="dropdown-item" href="#"
+                                                    onclick="confirmarEliminacionDelServicio('{{ $servicio->id }}')">
                                                     <i class="fas fa-trash-alt"></i> Eliminar Servicio
                                                 </a>
-                                                <a class="dropdown-item" href="#">
-                                                    <i class="fas fa-address-card"></i> Ver Conductores
+                                                <a class="dropdown-item"
+                                                    href="{{ route('servicio.obtenerConductores', $servicio->id) }}">
+                                                    <i class="fas fa-user"></i> Ver Conductores
                                                 </a>
-                                                <a class="dropdown-item" href="#">
-                                                    <i class="fas fa fa-truck"></i> Ver Vehiculos
-                                                </a>
-                                                <a class="dropdown-item" href="#">
-                                                    <i class="fas fa fa-file"></i> Documentos Conductores
-                                                </a>
-                                                <a class="dropdown-item" href="#">
-                                                    <i class="fas fa fa-file"></i> Documentos Vehiculos
+                                                <a class="dropdown-item"
+                                                    href="{{ route('servicio.obtenerVehiculos', $servicio->id) }}">
+                                                    <i class="fas fa-car"></i> Ver Vehículos
                                                 </a>
                                             </div>
                                         </div>

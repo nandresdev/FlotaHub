@@ -31,7 +31,6 @@ class ServicioController extends Controller
         return response()->json($servicios);
     }
 
-
     public function update(EditarServicioRequest $request, $id)
     {
         $servicio = Servicios::findOrFail($id);
@@ -41,12 +40,24 @@ class ServicioController extends Controller
         return response()->json($servicio);
     }
 
-
-
     public function destroy(Servicios $servicio)
     {
         $nombre = $servicio->nombre;
         $servicio->delete();
         return response()->json(['estado' => 'eliminado', 'nombre' => $nombre], 200);
+    }
+
+    public function obtenerConductores($id)
+    {
+        $servicios = Servicios::findOrFail($id);
+        $conductor = $servicios->conductor;
+        return view('web.servicios.listadoServicioConductores', compact('conductor'));
+    }
+
+    public function obtenerVehiculos($id)
+    {
+        $servicios = Servicios::findOrFail($id);
+        $vehiculo = $servicios->vehiculo;
+        return view('web.servicios.listadoServicioVehiculos', compact('vehiculo'));
     }
 }

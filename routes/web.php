@@ -38,6 +38,8 @@ Route::group(['prefix' => 'servicios', 'middleware' => 'auth'], function () {
     Route::post('/', [ServicioController::class, "store"])->name("servicio.store");
     Route::put('/{servicio}', [ServicioController::class, "update"])->name("servicio.update");
     Route::delete('/{servicio}', [ServicioController::class, "destroy"])->name("servicio.destroy");
+    Route::get('/{servicio}/conductores', [ServicioController::class, 'obtenerConductores'])->name('servicio.obtenerConductores');
+    Route::get('/{servicio}/vehiculos', [ServicioController::class, 'obtenerVehiculos'])->name('servicio.obtenerVehiculos');
 });
 
 Route::group(['prefix' => 'vehiculos', 'middleware' => 'auth'], function () {
