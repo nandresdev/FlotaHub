@@ -16,18 +16,20 @@ return new class extends Migration
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->id();
             $table->string('tipo_vehiculo');
-            $table->string('patente');
+            $table->string('patente')->unique();
             $table->string('marca');
             $table->string('modelo');
             $table->string('combustible');
-            $table->string('ano');
+            $table->year('ano');
             $table->string('traccion');
             $table->string('color');
-            $table->string('numero_motor');
-            $table->string('numero_chasis');
-            $table->string('kilometraje')->nullable();
+            $table->string('numero_motor')->unique();
+            $table->string('numero_chasis')->unique();
+            $table->integer('kilometraje')->nullable();
+            $table->string('estado')->default('operativo'); 
+            $table->string('foto')->nullable(); 
             $table->unsignedBigInteger('id_servicios')->nullable();
-            $table->foreign("id_servicios")->references("id")->on("servicios")->onUpdate("cascade");
+            $table->foreign('id_servicios')->references('id')->on('servicios')->onUpdate('cascade');
             $table->timestamps();
         });
     }

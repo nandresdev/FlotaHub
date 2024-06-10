@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documentos_servicios', function (Blueprint $table) {
+        Schema::create('items_checklist', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_servicios')->nullable();
-            $table->foreign("id_servicios")->references("id")->on("servicios")->onUpdate("cascade");
-            $table->string('nombre');
-            $table->string('tipo');
+            $table->unsignedBigInteger('id_checklist');
+            $table->foreign('id_checklist')->references('id')->on('checklists')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('pregunta');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documentos_servicios');
+        Schema::dropIfExists('items_checklist');
     }
 };

@@ -19,10 +19,12 @@ return new class extends Migration
             $table->date('fecha_nacimiento');
             $table->string('telefono');
             $table->string('nacionalidad');
+            $table->string('foto_perfil')->nullable(); // URL de la foto de perfil
             $table->unsignedBigInteger('id_servicios')->nullable();
-            $table->foreign("id_servicios")->references("id")->on("servicios")->onUpdate("cascade");
+            $table->foreign('id_servicios')->references('id')->on('servicios')->onUpdate('cascade');
             $table->timestamps();
         });
+    
     }
 
     /**
