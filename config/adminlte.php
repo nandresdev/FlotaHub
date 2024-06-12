@@ -266,23 +266,6 @@ return [
             'url' => 'home',
             'icon' => 'fas fa-fw fa-home',
         ],
-        ['header' => 'AJUSTES DE LA CUENTA'],
-        [
-            'text' => 'profile',
-            'url' => 'perfil',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        ['header' => 'ADMINISTRACIÓN'],
-        [
-            'text' => 'Usuarios',
-            'url' => 'usuarios/',
-            'icon' => 'fas fa-fw fa-users',
-        ],
-        [
-            'text' => 'Servicios',
-            'url' => 'servicios/',
-            'icon' => 'fas fa-fw fa-sitemap',
-        ],
         [
             'text' => 'Roles y Permisos',
             'url' => 'rolesypermisos/',
@@ -293,17 +276,140 @@ return [
             'url'  => 'logs/',
             'icon' => 'fas fa-wrench',
         ],
+        ['header' => 'AJUSTES DE LA CUENTA'],
+        [
+            'text' => 'profile',
+            'url' => 'perfil',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        ['header' => 'ADMINISTRACIÓN'],
+        [
+            'text' => 'Control de Usuarios',
+            'url' => 'usuarios/',
+            'icon' => 'fas fa-fw fa-users',
+        ],
+        [
+            'text' => 'Control de Servicios',
+            'url' => 'servicios/',
+            'icon' => 'fas fa-tag',
+
+            'submenu' => [
+                [
+                    'text'  => 'Registro de Servicios',
+                    'url'  => '',
+                ],
+                [
+                    'text'  => 'Registro de Ruta',
+                    'url'  => '',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Control de Documentos',
+            'url'  => 'validacion-documento/',
+            'icon' => 'fas fa-clipboard-list',
+        ],
+        [
+            'text' => 'Control de Checklists',
+            'url'  => 'validacion-check/',
+            'icon' => 'fas fa-clipboard-list',
+        ],
+        [
+            'text' => 'Control de Problemas',
+            'url' => 'problemas/',
+            'icon' => 'fas fa-clipboard-list',
+        ],
         ['header' => 'INTRANET'],
         [
-            'text' => 'Conductores',
-            'url' => 'conductores/',
-            'icon' => 'fas fa-address-card',
+            'text' => 'Vehículos',
+            'url'  => 'vehiculo/',
+            'icon' => 'fas fa-truck-pickup',
+
+            'submenu' => [
+                [
+                    'text'  => 'Registro de Vehículos',
+                    'url'  => '',
+                ],
+                [
+                    'text'  => 'Asignar Servicios',
+                    'url'  => '',
+                ],
+                [
+                    'text'  => 'Registro de Kilometraje',
+                    'url'  => '',
+                ],
+            ],
         ],
         [
-            'text' => 'Vehiculos',
-            'url' => 'vehiculos/',
-            'icon' => 'fas fa fa-truck',
+            'text' => 'Conductores',
+            'url'  => 'conductor/',
+            'icon' => 'fas fa-fw fa-user',
+
+            'submenu' => [
+                [
+                    'text'  => 'Registro de Conductores',
+                    'url'  => '',
+                ],
+                [
+                    'text'  => 'Asignar Vehículo',
+                    'url'  => '',
+                ],
+            ],
         ],
+        [
+            'text' => 'Checklists',
+            'url'  => 'checklist/',
+            'icon' => 'fas fa-clipboard-list',
+
+            'submenu' => [
+                [
+                    'text'  => 'Registro de Checklists',
+                    'url'  => '',
+                ],
+                [
+                    'text'  => 'Asignar Servicios',
+                    'url'  => '',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Documentos',
+            'url'  => 'documentos/',
+            'icon' => 'fas fa-clipboard-list',
+
+            'submenu' => [
+                [
+                    'text'  => 'Documentos de Servicios',
+                    'url'  => '',
+                ],
+                [
+                    'text'  => 'Documentos Conductores',
+                    'url'  => '',
+                ],
+                [
+                    'text'  => 'Documentos Vehículos',
+                    'url'  => '',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Problemas',
+            'url'  => 'problema/',
+            'icon' => 'fas fa-clipboard-list',
+
+            'submenu' => [
+                [
+                    'text'  => 'Problemas de Conductores',
+                    'url'  => '',
+                ],
+                [
+                    'text'  => 'Problemas de Vehículos',
+                    'url'  => '',
+                ],
+            ],
+        ],
+
+
     ],
 
     /*
