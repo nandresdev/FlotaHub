@@ -9,17 +9,14 @@ Este proyecto es una intranet desarrollada para gestionar de manera eficiente y 
 - **Gestión de Usuarios:**
   - Registro y control de usuarios con diferentes roles y permisos.
   - Estado de operatividad de los usuarios.
-  - Fotos de perfil de los usuarios.
 
 - **Gestión de Servicios:**
   - Registro de servicios con detalles y fechas.
   - Asociación de servicios a checklists específicos.
-  - Fotos relacionadas con los servicios.
 
 - **Gestión de Vehículos:**
   - Registro de vehículos con detalles completos.
   - Estado de operatividad de los vehículos.
-  - Fotos de los vehículos.
   - Asociación de vehículos a servicios específicos.
 
 - **Gestión de Conductores:**
