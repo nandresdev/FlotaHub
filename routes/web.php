@@ -39,7 +39,8 @@ Route::group(['prefix' => 'usuarios', 'middleware' => ['auth', 'verEstadoUsuario
 Route::group(['prefix' => 'servicios', 'middleware' => ['auth', 'verEstadoUsuario']], function () {
     Route::get('/', [ServicioController::class, "index"])->name("servicio.index");
     Route::post('/', [ServicioController::class, "store"])->name("servicio.store");
-    Route::put('/servicios/{servicio}', [ServicioController::class, 'update'])->name('servicios.update');
+    Route::get('/editar/{servicio}', [ServicioController::class, "edit"])->name("servicio.edit");
+    Route::put('/{servicio}', [ServicioController::class, 'update'])->name('servicio.update');
     Route::delete('/{servicio}', [ServicioController::class, "destroy"])->name("servicio.destroy");
     Route::get('/{servicio}/conductores', [ServicioController::class, 'obtenerConductores'])->name('servicio.obtenerConductores');
     Route::get('/{servicio}/vehiculos', [ServicioController::class, 'obtenerVehiculos'])->name('servicio.obtenerVehiculos');

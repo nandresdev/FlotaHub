@@ -18,10 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_servicio');
             $table->string('origen');
             $table->string('destino');
-            $table->time('hora_salida');
-            $table->time('hora_llegada');
             $table->timestamps();
-            
+
             $table->foreign('id_servicio')->references('id')->on('servicios')->onUpdate('cascade')->onDelete('cascade');
         });
     }

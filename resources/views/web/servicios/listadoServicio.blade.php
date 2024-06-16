@@ -68,10 +68,8 @@
                                                 aria-haspopup="true" aria-expanded="false">
                                                 Opciones
                                             </button>
-                                            <div class="dropdown-menu"
-                                                aria-labelledby="dropdownMenuButton{{ $servicio->id }}">
-                                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target="#editarServicioModal{{ $servicio->id }}">
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{ route('servicio.edit', $servicio->id) }}">
                                                     <i class="fas fa-edit"></i> Editar Servicio
                                                 </a>
                                                 <a class="dropdown-item" href="#"

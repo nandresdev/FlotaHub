@@ -16,8 +16,8 @@ class AgregarServicioRequest extends FormRequest
         return [
             'nombre' => 'required|string|max:255|unique:servicios,nombre',
             'fecha_inicio' => 'required|date|',
-            'fecha_fin' => 'required|date|',
-            'foto' => 'required|mimes:jpeg,jpg,png|',
+            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+            'foto' => 'required|mimes:jpeg,jpg,png|max:2048',
         ];
     }
 
@@ -40,7 +40,9 @@ class AgregarServicioRequest extends FormRequest
             'fecha_inicio.required' => 'El campo :attribute es obligatorio.',
             'fecha_fin.required' => 'El campo :attribute es obligatorio.',
             'foto.required' => 'El campo :attribute es obligatorio.',
-
+            'fecha_fin.after_or_equal' => 'La :attribute debe ser una fecha posterior o igual a la fecha de inicio.',
+            'foto.mimes' => 'El campo :attribute debe ser un archivo de tipo: jpeg, jpg, png.',
+            'foto.max' => 'El archivo :attribute no debe superar los 2MB.',
         ];
     }
 }

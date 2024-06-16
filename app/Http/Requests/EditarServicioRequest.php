@@ -17,7 +17,7 @@ class EditarServicioRequest extends FormRequest
         return [
             'nombre' => 'required|string|unique:servicios,nombre,' . $this->route('servicio'),
             'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date',
+            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
             'foto' => 'nullable|mimes:jpeg,jpg,png|max:2048',
         ];
     }
@@ -39,6 +39,7 @@ class EditarServicioRequest extends FormRequest
             'nombre.unique' => 'El campo :attribute ya se encuentra registrado.',
             'fecha_inicio.required' => 'El campo :attribute es obligatorio.',
             'fecha_fin.required' => 'El campo :attribute es obligatorio.',
+            'fecha_fin.after_or_equal' => 'La :attribute debe ser una fecha posterior o igual a la fecha de inicio.',
             'foto.mimes' => 'El campo :attribute debe ser un archivo de tipo: jpeg, jpg, png.',
             'foto.max' => 'El archivo :attribute no debe superar los 2MB.',
         ];

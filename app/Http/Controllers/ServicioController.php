@@ -45,6 +45,16 @@ class ServicioController extends Controller
         $servicios->save();
         return response()->json($servicios);
     }
+
+    public function edit($id)
+    {
+        $servicio = Servicios::findOrFail($id);
+
+        return view('web.servicios.editarServicio', [
+            "servicio" => $servicio
+        ]);
+    }
+
     public function update(EditarServicioRequest $request, $id)
     {
         $servicio = Servicios::findOrFail($id);
@@ -70,9 +80,13 @@ class ServicioController extends Controller
         return response()->json($servicio);
     }
 
-
     public function destroy(Servicios $servicio)
     {
+        if ($servicio->foto) {
+            $publicId = basename($servicio->foto, '.' . pathinfo($servicio->foto, PATHINFO_EXTENSION));
+            Cloudinary::destroy("servicios/{$publicId}");
+        }
+
         $nombre = $servicio->nombre;
         $servicio->delete();
         return response()->json(['estado' => 'eliminado', 'nombre' => $nombre], 200);
