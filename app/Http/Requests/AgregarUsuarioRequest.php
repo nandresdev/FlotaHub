@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class AgregarUsuarioRequest extends FormRequest
 {
-   
+
     public function authorize(): bool
     {
         return true;
@@ -18,7 +18,7 @@ class AgregarUsuarioRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users|max:255',
             'password' => 'required|string|min:3|max:255',
-            'foto_perfil' => 'required|mimes:jpeg,jpg,png|', 
+            'foto_perfil' => 'nullable|mimes:jpeg,jpg,png|max:2048',
         ];
     }
 
@@ -39,6 +39,7 @@ class AgregarUsuarioRequest extends FormRequest
             'email.required' => 'El campo :attribute es obligatorio.',
             'password.required' => 'El campo :attribute es obligatorio.',
             'foto_perfil.required' => 'El campo :attribute es obligatorio.',
+            'foto_perfil.max' => 'El archivo :attribute no debe superar los 2MB.',
         ];
     }
 }
