@@ -18,6 +18,7 @@ class AgregarUsuarioRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users|max:255',
             'password' => 'required|string|min:3|max:255',
+            'foto_perfil' => 'required|mimes:jpeg,jpg,png|', 
         ];
     }
 
@@ -27,6 +28,7 @@ class AgregarUsuarioRequest extends FormRequest
             'name' => 'nombre completo',
             'email' => 'correo electrónico',
             'password' => 'contraseña',
+            'foto_perfil' => 'foto perfil',
         ];
     }
 
@@ -36,6 +38,7 @@ class AgregarUsuarioRequest extends FormRequest
             'name.required' => 'El campo :attribute es obligatorio.',
             'email.required' => 'El campo :attribute es obligatorio.',
             'password.required' => 'El campo :attribute es obligatorio.',
+            'foto_perfil.required' => 'El campo :attribute es obligatorio.',
         ];
     }
 }

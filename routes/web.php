@@ -22,12 +22,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(['auth']);
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(['auth', 'verEstadoUsuario']);
 Route::get('/perfil', function () {
     return view('web.usuarios.verUsuario');
-})->name('perfil')->middleware(['auth']);
+})->name('perfil')->middleware(['auth', 'verEstadoUsuario']);
 
-Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'usuarios', 'middleware' => ['auth', 'verEstadoUsuario']], function () {
     Route::get('/', [UsuarioController::class, "index"])->name("usuario.index");
     Route::get('/crear', [UsuarioController::class, "create"])->name("usuario.create");
     Route::post('/', [UsuarioController::class, "store"])->name("usuario.store");
@@ -36,7 +36,7 @@ Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function () {
     Route::delete('/{usuario}', [UsuarioController::class, "destroy"])->name("usuario.destroy");
 });
 
-Route::group(['prefix' => 'servicios', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'servicios', 'middleware' => ['auth', 'verEstadoUsuario']], function () {
     Route::get('/', [ServicioController::class, "index"])->name("servicio.index");
     Route::post('/', [ServicioController::class, "store"])->name("servicio.store");
     Route::put('/{servicio}', [ServicioController::class, "update"])->name("servicio.update");
@@ -45,7 +45,7 @@ Route::group(['prefix' => 'servicios', 'middleware' => 'auth'], function () {
     Route::get('/{servicio}/vehiculos', [ServicioController::class, 'obtenerVehiculos'])->name('servicio.obtenerVehiculos');
 });
 
-Route::group(['prefix' => 'vehiculos', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'vehiculos', 'middleware' => ['auth', 'verEstadoUsuario']], function () {
     Route::get('/', [VehiculosController::class, "index"])->name("vehiculo.index");
     Route::get('/crear', [VehiculosController::class, "create"])->name("vehiculo.create");
     Route::post('/', [VehiculosController::class, "store"])->name("vehiculo.store");
@@ -54,7 +54,7 @@ Route::group(['prefix' => 'vehiculos', 'middleware' => 'auth'], function () {
     Route::delete('/{vehiculo}', [VehiculosController::class, "destroy"])->name("vehiculo.destroy");
 });
 
-Route::group(['prefix' => 'conductores', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'conductores', 'middleware' => ['auth', 'verEstadoUsuario']], function () {
     Route::get('/', [ConductoresController::class, "index"])->name("conductor.index");
     Route::get('/crear', [ConductoresController::class, "create"])->name("conductor.create");
     Route::post('/', [ConductoresController::class, "store"])->name("conductor.store");
@@ -63,8 +63,7 @@ Route::group(['prefix' => 'conductores', 'middleware' => 'auth'], function () {
     Route::delete('/{conductor}', [ConductoresController::class, "destroy"])->name("conductor.destroy");
 });
 
-
-Route::group(['prefix' => 'documentos-servicios', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'documentos-servicios', 'middleware' => ['auth', 'verEstadoUsuario']], function () {
     Route::get('/{servicio}/documentos-conductores', [DocumentosServiciosController::class, 'listadoDocumentosConductores'])->name('documentosServicios.obtenerConductores');
     Route::get('/{servicio}/documentos-vehiculos', [DocumentosServiciosController::class, 'listadoDocumentosVehiculos'])->name('documentosServicios.obtenerVehiculos');
 });

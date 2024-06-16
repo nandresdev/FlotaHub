@@ -12,38 +12,59 @@
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
-                <button class="btn btn-primary" onclick="window.location='{{ route('usuario.create') }}'">
+                <button class="btn btn-info" onclick="window.location='{{ route('usuario.create') }}'">
                     Nuevo Usuario
                 </button>
             </div>
             <div class="table-responsive" id="scroll-footer-table" style="margin-bottom: 20px;">
-                <table class="table table-bordered" id="datatableUsuario">
-                    <thead class="bg-primary">
+                <table class="table table-striped projects" id="datatableUsuario">
+                    <thead class="bg-dark">
                         <tr>
+                            <th></th>
                             <th>NOMBRE COMPLETO</th>
                             <th>CORREO ELECTRÓNICO</th>
                             <th>CARGO</th>
-                            <th>ACCIÓN</th>
+                            <th>ESTADO</th>
+                            <th></th>
                         </tr>
                         <tr class="filters">
+                            <th></th>
                             <th><input type="text" class="form-control" placeholder="Nombre Completo" /></th>
                             <th><input type="text" class="form-control" placeholder="Correo Electrónico" /></th>
                             <th><input type="text" class="form-control" placeholder="Cargo" /></th>
+                            <th>
+                                <select class="form-control">
+                                    <option value="">Seleccione Estado</option>
+                                    <option value="OPERATIVO">OPERATIVO</option>
+                                    <option value="DESACTIVADO">DESACTIVADO</option>
+                                </select>
+                            </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($usuarios as $usuario)
                             <tr>
+                                <td>
+                                    <img src="{{ $usuario->foto_perfil ? asset($usuario->foto_perfil) : asset('img/avatar_cero.png') }}" 
+                                         alt="Foto de Perfil" class="img-thumbnail" style="width: 50px; height: 50px;">
+                                </td>
                                 <td>{{ $usuario->name }}</td>
                                 <td>{{ $usuario->email }}</td>
-                                <td></td>
+                                <td>{{ $usuario->cargo }}</td>
+                                <td>
+                                    @if ($usuario->estado === 'OPERATIVO')
+                                        <span class="badge badge-success">OPERATIVO</span>
+                                    @else
+                                        <span class="badge badge-danger">DESACTIVADO</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('usuario.edit', $usuario->id) }}" class="btn btn-success btn-sm">
+                                        <a href="{{ route('usuario.edit', $usuario->id) }}" class="btn btn-default btn-sm">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a class="btn btn-danger btn-sm"
+                                        <a class="btn btn-default btn-sm"
                                             onclick="confirmarEliminacionDelUsuario('{{ $usuario->id }}')">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
@@ -100,7 +121,7 @@
                 initComplete: function() {
                     this.api().columns().every(function() {
                         const column = this;
-                        $('input', this.header()).on('keyup change', function() {
+                        $('input, select', this.header()).on('keyup change', function() {
                             if (column.search() !== this.value) {
                                 column.search(this.value).draw();
                             }

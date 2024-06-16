@@ -11,7 +11,7 @@
     <div class="card-header">
     </div>
 
-    <form id="formularioDeUsuario">
+    <form id="formularioDeUsuario" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
             <div class="form-group">
@@ -41,6 +41,18 @@
                     <div class="invalid-feedback" id="inputValidacionPassword">
                     </div>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputCargo">Cargo</label>
+                <div class="invalid-feedback" id="inputValidacionEmail">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="foto_perfil">Foto Perfil</label>
+                <input type="file" class="form-control-file" name="foto_perfil" id="campoArchivosSubirDocumento"
+                    accept=".jpeg,.jpg,.png">
+                <div class="invalid-feedback" id="validacionCampoArchivosSubirDocumento"></div>
+                <div class="valid-feedback" id="validacionCampoArchivosSubirDocumentoExito">El archivo es válido</div>
             </div>
         </div>
 
@@ -87,38 +99,59 @@
 
         function validarCampos(data) {
             if (typeof data.responseJSON.errors.name !== 'undefined') {
-                document.getElementById("nombre").setAttribute("class", "form-control is-invalid");
+                document.getElementById("nombre").classList.add("is-invalid");
                 document.getElementById("inputValidacionNombre").innerHTML = data.responseJSON.errors.name;
             } else {
-                document.getElementById("nombre").setAttribute("class", "form-control is-valid");
+                document.getElementById("nombre").classList.remove("is-invalid");
+                document.getElementById("nombre").classList.add("is-valid");
                 document.getElementById("inputValidacionNombre").innerHTML = "";
             }
 
             if (typeof data.responseJSON.errors.email !== 'undefined') {
-                document.getElementById("email").setAttribute("class", "form-control is-invalid");
+                document.getElementById("email").classList.add("is-invalid");
                 document.getElementById("inputValidacionEmail").innerHTML = data.responseJSON.errors.email;
             } else {
-                document.getElementById("email").setAttribute("class", "form-control is-valid");
+                document.getElementById("email").classList.remove("is-invalid");
+                document.getElementById("email").classList.add("is-valid");
                 document.getElementById("inputValidacionEmail").innerHTML = "";
             }
 
             if (typeof data.responseJSON.errors.password !== 'undefined') {
-                document.getElementById("contraseña").setAttribute("class", "form-control is-invalid");
+                document.getElementById("contraseña").classList.add("is-invalid");
                 document.getElementById("inputValidacionPassword").innerHTML = data.responseJSON.errors.password;
             } else {
-                document.getElementById("contraseña").setAttribute("class", "form-control is-valid");
+                document.getElementById("contraseña").classList.remove("is-invalid");
+                document.getElementById("contraseña").classList.add("is-valid");
                 document.getElementById("inputValidacionPassword").innerHTML = "";
+            }
+
+            if (typeof data.responseJSON.errors.foto_perfil !== 'undefined') {
+                document.getElementById("campoArchivosSubirDocumento").classList.add("is-invalid");
+                document.getElementById("validacionCampoArchivosSubirDocumento").innerHTML = data.responseJSON.errors
+                    .foto_perfil;
+                document.getElementById("validacionCampoArchivosSubirDocumento").style.display = "block";
+                document.getElementById("validacionCampoArchivosSubirDocumentoExito").style.display = "none";
+            } else {
+                document.getElementById("campoArchivosSubirDocumento").classList.remove("is-invalid");
+                document.getElementById("campoArchivosSubirDocumento").classList.add("is-valid");
+                document.getElementById("validacionCampoArchivosSubirDocumento").innerHTML = "";
+                document.getElementById("validacionCampoArchivosSubirDocumento").style.display = "none";
+                document.getElementById("validacionCampoArchivosSubirDocumentoExito").style.display = "block";
             }
         }
 
         function registrarUsuario() {
-            document.getElementById("botonDeCreacion").removeAttribute("disabled");
-            const datosFormulario = $("#formularioDeUsuario").serialize();
+            document.getElementById("botonDeCreacion").setAttribute("disabled", "disabled");
+
+            const formElement = document.getElementById("formularioDeUsuario");
+            const formData = new FormData(formElement);
+
             $.ajax({
                 type: 'POST',
-                datatype: 'json',
                 url: '{{ route('usuario.store') }}',
-                data: datosFormulario,
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function(data) {
                     Swal.fire({
                         icon: 'success',
@@ -133,12 +166,10 @@
                     });
                 },
                 error: function(data) {
-                    console.log(data)
-                    validarCampos(data)
+                    validarCampos(data);
                     document.getElementById("botonDeCreacion").removeAttribute("disabled");
-
                 }
-            })
+            });
         }
     </script>
 @stop

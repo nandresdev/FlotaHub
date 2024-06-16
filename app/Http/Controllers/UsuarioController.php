@@ -34,8 +34,16 @@ class UsuarioController extends Controller
         $usuario->name = $request->input('name');
         $usuario->email = $request->input('email');
         $usuario->password = Hash::make($request->input('password'));
+    
+        if ($request->hasFile('foto_perfil')) {
+            $file = $request->file('foto_perfil');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('img'), $filename);
+            $usuario->foto_perfil = 'img/' . $filename;
+        }
+    
         $usuario->save();
-
+    
         return response()->json($usuario);
     }
 
@@ -53,11 +61,27 @@ class UsuarioController extends Controller
         $usuario = User::findOrFail($id);
         $usuario->name = $request->input('name');
         $usuario->email = $request->input('email');
-        $usuario->password = Hash::make($request->input('password'));
+        $usuario->estado = $request->input('estado');
+    
+        if ($request->filled('password')) {
+            $usuario->password = Hash::make($request->input('password'));
+        }
+    
+        if ($request->hasFile('foto_perfil')) {
+            if ($usuario->foto_perfil && file_exists(public_path($usuario->foto_perfil))) {
+                unlink(public_path($usuario->foto_perfil));
+            }
+            $file = $request->file('foto_perfil');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('img'), $filename);
+            $usuario->foto_perfil = 'img/' . $filename;
+        }
+    
         $usuario->save();
-
+    
         return response()->json($usuario);
     }
+    
 
     public function destroy(User $usuario)
     {

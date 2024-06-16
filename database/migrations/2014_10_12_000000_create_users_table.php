@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('cargo')->nullable();
-            $table->string('estado')->default('operativo'); 
+            $table->string('estado')->default('OPERATIVO'); 
             $table->string('foto_perfil')->nullable(); 
             $table->rememberToken();
             $table->timestamps();

@@ -14,26 +14,25 @@
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
+                            <img src="{{ auth()->user()->foto_perfil ? asset(auth()->user()->foto_perfil) : asset('img/avatar_cero.png') }}" 
+                                         alt="Foto de Perfil" class="img-thumbnail" style="width: 128px; height: 128px;">
                         </div>
-                        <strong><i class="fas fa-id-card-alt mr-1"></i> Nombre</strong>
-                        <p class="text-muted">
-                            {{ auth()->user()->name }}
-                        </p>
-                        <hr>
-                        <strong><i class="fas fa-id-card-alt mr-1"></i> Cargo</strong>
-                        <p class="text-muted">
-                            {{ auth()->user()->cargo }}
-                        </p>
-                        <hr>
-                        <strong><i class="fas fa-at mr-1"></i> Correo</strong>
-                        <p class="text-muted">{{ auth()->user()->email }}</p>
-                        <hr>
-                        <div class="text-center">
-                            <a href="{{ route('usuario.edit', auth()->user()->id) }}" class="btn btn-primary">
-                                <i class="fas fa-edit mr-1"></i> Modificar
-                            </a>
-                        </div>
+                        <br>
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Nombre</b> <p class="float-right text-muted">{{ auth()->user()->name }}</p>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Correo Electrónico</b> <p class="float-right text-muted">{{ auth()->user()->email }}</p>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Estado</b> <p class="float-right badge badge-success">{{ auth()->user()->estado }}</p>
+                            </li>
+                        </ul>
+                        <a href="{{ route('usuario.edit', auth()->user()->id) }}" class="btn btn-dark btn-block"><b>Modificar</b>
+                            <i class="fas fa-edit mr-1"></i></a>
                     </div>
+
                 </div>
             </div>
         </div>

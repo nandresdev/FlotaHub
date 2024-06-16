@@ -15,18 +15,13 @@ class EditarUsuarioRequest extends FormRequest
         return true;
     }
 
-    public function rules(Request $request): array
+    public function rules(): array
     {
-        $userId = Auth::id();
         return [
             'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($userId),
-            ],       'password' => 'required|string|min:3|max:255',
+            'email' => 'required|string|email|unique:users,email,' . $this->route('usuario'),
+            'password' => 'nullable|string|min:3|max:255',
+            'foto_perfil' => 'nullable|mimes:jpeg,jpg,png',
         ];
     }
 
@@ -36,6 +31,7 @@ class EditarUsuarioRequest extends FormRequest
             'name' => 'nombre completo',
             'email' => 'correo electrónico',
             'password' => 'contraseña',
+            'foto_perfil' => 'foto perfil',
         ];
     }
 
@@ -45,6 +41,7 @@ class EditarUsuarioRequest extends FormRequest
             'name.required' => 'El campo :attribute es obligatorio.',
             'email.required' => 'El campo :attribute es obligatorio.',
             'password.required' => 'El campo :attribute es obligatorio.',
+            'foto_perfil.required' => 'El campo :attribute es obligatorio.',
         ];
     }
 }
