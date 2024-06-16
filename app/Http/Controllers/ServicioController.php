@@ -6,6 +6,8 @@ use App\Models\Servicios;
 use Illuminate\Http\Request;
 use App\Http\Requests\EditarServicioRequest;
 use App\Http\Requests\AgregarServicioRequest;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 
 class ServicioController extends Controller
 {
@@ -27,18 +29,47 @@ class ServicioController extends Controller
     {
         $servicios = new Servicios();
         $servicios->nombre = $request->input('nombre');
+        $servicios->fecha_inicio = $request->input('fecha_inicio');
+        $servicios->fecha_fin = $request->input('fecha_fin');
+        $servicios->save();
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $uploadResult = Cloudinary::upload($file->getRealPath(), [
+                'folder' => 'servicios',
+                'public_id' => time()
+            ]);
+            $servicios->foto = $uploadResult->getSecurePath();
+        }
+
         $servicios->save();
         return response()->json($servicios);
     }
-
     public function update(EditarServicioRequest $request, $id)
     {
         $servicio = Servicios::findOrFail($id);
         $servicio->nombre = $request->input('nombre');
+        $servicio->fecha_inicio = $request->input('fecha_inicio');
+        $servicio->fecha_fin = $request->input('fecha_fin');
+
+        if ($request->hasFile('foto')) {
+            if ($servicio->foto) {
+                $publicId = basename($servicio->foto, '.' . pathinfo($servicio->foto, PATHINFO_EXTENSION));
+                Cloudinary::destroy("servicios/{$publicId}");
+            }
+            $file = $request->file('foto');
+            $uploadResult = Cloudinary::upload($file->getRealPath(), [
+                'folder' => 'servicios',
+                'public_id' => time()
+            ]);
+            $servicio->foto = $uploadResult->getSecurePath();
+        }
+
         $servicio->save();
 
         return response()->json($servicio);
     }
+
 
     public function destroy(Servicios $servicio)
     {

@@ -14,15 +14,11 @@ class EditarServicioRequest extends FormRequest
 
     public function rules(): array
     {
-        $servicioId = $this->route('servicio');
-
         return [
-            'nombre' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('servicios')->ignore($servicioId)
-            ],
+            'nombre' => 'required|string|unique:servicios,nombre,' . $this->route('servicio'),
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date',
+            'foto' => 'nullable|mimes:jpeg,jpg,png|max:2048',
         ];
     }
 
@@ -30,6 +26,9 @@ class EditarServicioRequest extends FormRequest
     {
         return [
             'nombre' => 'nombre servicio',
+            'fecha_inicio' => 'fecha inicio',
+            'fecha_fin' => 'fecha fin',
+            'foto' => 'foto servicio',
         ];
     }
 
@@ -38,6 +37,10 @@ class EditarServicioRequest extends FormRequest
         return [
             'nombre.required' => 'El campo :attribute es obligatorio.',
             'nombre.unique' => 'El campo :attribute ya se encuentra registrado.',
+            'fecha_inicio.required' => 'El campo :attribute es obligatorio.',
+            'fecha_fin.required' => 'El campo :attribute es obligatorio.',
+            'foto.mimes' => 'El campo :attribute debe ser un archivo de tipo: jpeg, jpg, png.',
+            'foto.max' => 'El archivo :attribute no debe superar los 2MB.',
         ];
     }
 }

@@ -290,13 +290,12 @@ return [
         ],
         [
             'text' => 'Control de Servicios',
-            'url' => 'servicios/',
             'icon' => 'fas fa-tag',
 
             'submenu' => [
                 [
                     'text'  => 'Registro de Servicios',
-                    'url'  => '',
+                    'url'  => 'servicios/',
                 ],
                 [
                     'text'  => 'Registro de Ruta',

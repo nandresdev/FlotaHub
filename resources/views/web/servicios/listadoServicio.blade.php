@@ -13,26 +13,53 @@
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#nuevoServicioModal">
+                <button class="btn btn-success" data-toggle="modal" data-target="#nuevoServicioModal">
                     Nuevo Servicio
                 </button>
             </div>
             <div class="table-responsive" id="scroll-footer-table" style="margin-bottom: 20px;">
-                <table class="table table-bordered" id="datatableServicio">
-                    <thead class="bg-primary">
+                <table class="table table-striped projects" id="datatableServicio">
+                    <thead class="bg-dark">
                         <tr>
+                            <th></th>
                             <th>NOMBRE</th>
-                            <th>ACCIÓN</th>
+                            <th>FECHA INICIO</th>
+                            <th>FECHA FIN</th>
+                            <th>ESTADO</th>
+                            <th></th>
                         </tr>
                         <tr class="filters">
+                            <th></th>
                             <th><input type="text" class="form-control" placeholder="Nombre" /></th>
+                            <th><input type="date" class="form-control" /></th>
+                            <th><input type="date" class="form-control" /></th>
+                            <th>
+                                <select class="form-control">
+                                    <option value="">Seleccione Estado</option>
+                                    <option value="OPERATIVO">OPERATIVO</option>
+                                    <option value="DESACTIVADO">DESACTIVADO</option>
+                                </select>
+                            </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($servicios as $servicio)
                             <tr>
+                                <td>
+                                    <img src="{{ $servicio->foto ? asset($servicio->foto) : asset('img/logo_empresa.png') }}"
+                                        alt="Foto de Perfil" class="img-thumbnail" style="width: 130px; height: 130px;">
+                                </td>
                                 <td>{{ $servicio->nombre }}</td>
+                                <td>{{ \Carbon\Carbon::parse($servicio->fecha_inicio)->format('d/m/Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($servicio->fecha_fin)->format('d/m/Y') }}</td>
+                                <td>
+                                    @if (\Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($servicio->fecha_fin)))
+                                        <span class="badge badge-success">DISPONIBLE</span>
+                                    @else
+                                        <span class="badge badge-danger">NO DISPONIBLE</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="btn-group">
                                         <div class="dropdown">
@@ -59,48 +86,16 @@
                                                     href="{{ route('servicio.obtenerVehiculos', $servicio->id) }}">
                                                     <i class="fas fa-car"></i> Ver Vehículos
                                                 </a>
-                                                <a class="dropdown-item"  href="{{ route('documentosServicios.obtenerConductores', $servicio->id) }}">
-                                                    <i class="fas fa fa-file"></i> Documentos Conductores
-                                                </a>
-                                                <a class="dropdown-item"  href="{{ route('documentosServicios.obtenerVehiculos', $servicio->id) }}">
-                                                    <i class="fas fa fa-file"></i> Documentos Vehiculos
+                                                <a class="dropdown-item"
+                                                    href="{{ route('servicio.obtenerVehiculos', $servicio->id) }}">
+                                                    <i class="fas fa-arrow-right"></i> Ver Rutas
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-                            <!-- Modal de Modificar -->
-                            <div class="modal fade" id="editarServicioModal{{ $servicio->id }}" tabindex="-1"
-                                role="dialog" aria-labelledby="servicioModal" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <form id="formularioDeEditiarServicio{{ $servicio->id }}">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-content">
-                                            <div class="card-body">
-                                                <div class="form-group">
-                                                    <label for="nombre{{ $servicio->id }}">Nombre</label>
-                                                    <input type="text" class="form-control"
-                                                        id="nombre{{ $servicio->id }}" placeholder="Nombre Servicio"
-                                                        name="nombre" value="{{ $servicio->nombre }}">
-                                                    <div class="invalid-feedback"
-                                                        id="inputValidacionNombre{{ $servicio->id }}"></div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary"
-                                                    id="botonDeEditar{{ $servicio->id }}"
-                                                    onclick="editarServicio({{ $servicio->id }})">Editar Servicio</button>
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">Cerrar</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
@@ -108,7 +103,7 @@
             <div class="modal fade" id="nuevoServicioModal" tabindex="-1" role="dialog" aria-labelledby="servicioModal"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <form id="formularioDeServicio">
+                    <form id="formularioDeServicio" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-content">
                             <div class="card-body">
@@ -118,16 +113,38 @@
                                         name="nombre" value="{{ old('nombre') }}">
                                     <div class="invalid-feedback" id="inputValidacionNombre"></div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="fecha_inicio">Fecha Inicio</label>
+                                    <input type="date" class="form-control" id="campoFechaInicio" name="fecha_inicio"
+                                        value="{{ old('fecha_inicio') }}">
+                                    <div class="invalid-feedback" id="inputValidacionFechaInicio"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fecha_fin">Fecha Fin</label>
+                                    <input type="date" class="form-control" id="campoFechaFin" name="fecha_fin"
+                                        value="{{ old('fecha_fin') }}">
+                                    <div class="invalid-feedback" id="inputValidacionFechaFin"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="foto">Foto</label>
+                                    <input type="file" class="form-control-file" name="foto"
+                                        id="campoArchivosSubirDocumento" accept=".jpeg,.jpg,.png">
+                                    <div class="invalid-feedback" id="validacionCampoArchivosSubirDocumento"></div>
+                                    <div class="valid-feedback" id="validacionCampoArchivosSubirDocumentoExito">El archivo
+                                        es válido</div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" id="botonDeCreacion"
-                                    onclick="registrarServicio()">Registrar Servicio</button>
+                                    onclick="registrarServicio()"><i class="fas fa-plus-circle"
+                                        style="margin-right: 2px;"></i> Registrar Servicio </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 @stop
@@ -191,16 +208,49 @@
                 document.getElementById("nombre").classList.remove("is-invalid");
                 document.getElementById("inputValidacionNombre").innerHTML = "";
             }
+
+            if (data.responseJSON && data.responseJSON.errors && data.responseJSON.errors.fecha_inicio) {
+                document.getElementById("campoFechaInicio").classList.add("is-invalid");
+                document.getElementById("inputValidacionFechaInicio").innerHTML = data.responseJSON.errors.fecha_inicio;
+            } else {
+                document.getElementById("campoFechaInicio").classList.remove("is-invalid");
+                document.getElementById("inputValidacionFechaInicio").innerHTML = "";
+            }
+
+            if (data.responseJSON && data.responseJSON.errors && data.responseJSON.errors.fecha_fin) {
+                document.getElementById("campoFechaFin").classList.add("is-invalid");
+                document.getElementById("inputValidacionFechaFin").innerHTML = data.responseJSON.errors.fecha_fin;
+            } else {
+                document.getElementById("campoFechaFin").classList.remove("is-invalid");
+                document.getElementById("inputValidacionFechaFin").innerHTML = "";
+            }
+
+            if (data.responseJSON && data.responseJSON.errors && data.responseJSON.errors.foto) {
+                document.getElementById("campoArchivosSubirDocumento").classList.add("is-invalid");
+                document.getElementById("validacionCampoArchivosSubirDocumento").innerHTML = data.responseJSON.errors.foto;
+                document.getElementById("validacionCampoArchivosSubirDocumento").style.display = "block";
+                document.getElementById("validacionCampoArchivosSubirDocumentoExito").style.display = "none";
+            } else {
+                document.getElementById("campoArchivosSubirDocumento").classList.remove("is-invalid");
+                document.getElementById("campoArchivosSubirDocumento").classList.add("is-valid");
+                document.getElementById("validacionCampoArchivosSubirDocumento").innerHTML = "";
+                document.getElementById("validacionCampoArchivosSubirDocumento").style.display = "none";
+                document.getElementById("validacionCampoArchivosSubirDocumentoExito").style.display = "block";
+            }
         }
 
         function registrarServicio() {
             document.getElementById("botonDeCreacion").setAttribute("disabled", "true");
-            const datosFormulario = $("#formularioDeServicio").serialize();
+
+            const formElement = document.getElementById("formularioDeServicio");
+            const formData = new FormData(formElement);
+
             $.ajax({
                 type: 'POST',
-                datatype: 'json',
                 url: '{{ route('servicio.store') }}',
-                data: datosFormulario,
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function(data) {
                     Swal.fire({
                         icon: 'success',
@@ -218,35 +268,6 @@
                     console.log(data);
                     validarCampos(data);
                     document.getElementById("botonDeCreacion").removeAttribute("disabled");
-                }
-            });
-        }
-
-        function editarServicio(id) {
-            document.getElementById("botonDeEditar" + id).setAttribute("disabled", "true");
-            const datosFormulario = $("#formularioDeEditiarServicio" + id).serialize();
-            $.ajax({
-                type: 'PUT',
-                dataType: 'json',
-                url: '{{ url('servicios') }}/' + id,
-                data: datosFormulario,
-                success: function(data) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Modificado!',
-                        text: 'El servicio ' + data.nombre + ' se modificó con éxito',
-                        confirmButtonColor: "#448aff",
-                        confirmButtonText: "Confirmar"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = '{{ route('servicio.index') }}';
-                        }
-                    });
-                },
-                error: function(data) {
-                    console.log(data);
-                    validarCampos(data, id);
-                    document.getElementById("botonDeEditar" + id).removeAttribute("disabled");
                 }
             });
         }

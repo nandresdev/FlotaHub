@@ -15,6 +15,9 @@ class AgregarServicioRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string|max:255|unique:servicios,nombre',
+            'fecha_inicio' => 'required|date|',
+            'fecha_fin' => 'required|date|',
+            'foto' => 'required|mimes:jpeg,jpg,png|',
         ];
     }
 
@@ -22,6 +25,10 @@ class AgregarServicioRequest extends FormRequest
     {
         return [
             'nombre' => 'nombre servicio',
+            'fecha_inicio' => 'fecha inicio',
+            'fecha_fin' => 'fecha fin',
+            'foto' => 'foto servicio',
+
         ];
     }
 
@@ -30,6 +37,10 @@ class AgregarServicioRequest extends FormRequest
         return [
             'nombre.required' => 'El campo :attribute es obligatorio.',
             'nombre.unique' => 'El campo :attribute ya se encuentra registrado.',
+            'fecha_inicio.required' => 'El campo :attribute es obligatorio.',
+            'fecha_fin.required' => 'El campo :attribute es obligatorio.',
+            'foto.required' => 'El campo :attribute es obligatorio.',
+
         ];
     }
 }

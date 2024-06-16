@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\AgregarUsuarioRequest;
 use App\Http\Requests\EditarUsuarioRequest;
+use App\Http\Requests\AgregarUsuarioRequest;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UsuarioController extends Controller
 {
@@ -34,16 +35,18 @@ class UsuarioController extends Controller
         $usuario->name = $request->input('name');
         $usuario->email = $request->input('email');
         $usuario->password = Hash::make($request->input('password'));
-    
+
         if ($request->hasFile('foto_perfil')) {
             $file = $request->file('foto_perfil');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('img'), $filename);
-            $usuario->foto_perfil = 'img/' . $filename;
+            $uploadResult = Cloudinary::upload($file->getRealPath(), [
+                'folder' => 'usuario',
+                'public_id' => time()
+            ]);
+            $usuario->foto_perfil = $uploadResult->getSecurePath();
         }
-    
+
         $usuario->save();
-    
+
         return response()->json($usuario);
     }
 
@@ -62,31 +65,41 @@ class UsuarioController extends Controller
         $usuario->name = $request->input('name');
         $usuario->email = $request->input('email');
         $usuario->estado = $request->input('estado');
-    
+
         if ($request->filled('password')) {
             $usuario->password = Hash::make($request->input('password'));
         }
-    
+
         if ($request->hasFile('foto_perfil')) {
-            if ($usuario->foto_perfil && file_exists(public_path($usuario->foto_perfil))) {
-                unlink(public_path($usuario->foto_perfil));
+            if ($usuario->foto_perfil) {
+                $publicId = basename($usuario->foto_perfil, '.' . pathinfo($usuario->foto_perfil, PATHINFO_EXTENSION));
+                Cloudinary::destroy("usuario/{$publicId}");
             }
             $file = $request->file('foto_perfil');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('img'), $filename);
-            $usuario->foto_perfil = 'img/' . $filename;
+            $uploadResult = Cloudinary::upload($file->getRealPath(), [
+                'folder' => 'usuario',
+                'public_id' => time()
+            ]);
+            $usuario->foto_perfil = $uploadResult->getSecurePath();
         }
-    
+
         $usuario->save();
-    
+
         return response()->json($usuario);
     }
-    
+
+
 
     public function destroy(User $usuario)
     {
-        $nombre = $usuario->name; 
+        if ($usuario->foto_perfil) {
+            $publicId = basename($usuario->foto_perfil, '.' . pathinfo($usuario->foto_perfil, PATHINFO_EXTENSION));
+            Cloudinary::destroy("usuario/{$publicId}");
+        }
+
+        $nombre = $usuario->name;
         $usuario->delete();
+
         return response()->json(['estado' => 'eliminado', 'nombre' => $nombre], 200);
     }
 }

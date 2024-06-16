@@ -12,7 +12,7 @@
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
-                <button class="btn btn-info" onclick="window.location='{{ route('usuario.create') }}'">
+                <button class="btn btn-success" onclick="window.location='{{ route('usuario.create') }}'">
                     Nuevo Usuario
                 </button>
             </div>
@@ -46,7 +46,7 @@
                         @foreach ($usuarios as $usuario)
                             <tr>
                                 <td>
-                                    <img src="{{ $usuario->foto_perfil ? asset($usuario->foto_perfil) : asset('img/avatar_cero.png') }}" 
+                                    <img src="{{ $usuario->foto_perfil ? asset($usuario->foto_perfil) : asset('img/avatar_cero.png') }}"
                                          alt="Foto de Perfil" class="img-thumbnail" style="width: 50px; height: 50px;">
                                 </td>
                                 <td>{{ $usuario->name }}</td>

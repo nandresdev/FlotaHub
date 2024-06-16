@@ -79,13 +79,12 @@
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        const togglePassword = document.getElementById("togglePassword");
-        const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+           const togglePassword = document.getElementById("togglePassword");
+        const cambiarPassword = document.getElementById("cambiarPassword");
+        const passwordField = document.getElementById("contraseña");
         const eyeIcon1 = document.getElementById("eyeIcon1");
-        const eyeIcon2 = document.getElementById("eyeIcon2");
 
         togglePassword.addEventListener("click", function() {
-            const passwordField = document.getElementById("inputClave");
             if (passwordField.type === "password") {
                 passwordField.type = "text";
                 eyeIcon1.classList.remove("fa-eye-slash");

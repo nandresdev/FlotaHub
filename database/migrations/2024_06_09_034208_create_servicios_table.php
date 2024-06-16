@@ -19,12 +19,12 @@ return new class extends Migration
             $table->text('descripcion')->nullable();
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
-            $table->string('foto')->nullable(); 
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }
 
-  
+
     public function down()
     {
         Schema::dropIfExists('servicios');
