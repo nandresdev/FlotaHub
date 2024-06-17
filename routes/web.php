@@ -8,6 +8,7 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\VehiculosController;
 use App\Http\Controllers\ConductoresController;
 use App\Http\Controllers\DocumentosServiciosController;
+use App\Http\Controllers\RutaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,14 @@ Route::group(['prefix' => 'servicios', 'middleware' => ['auth', 'verEstadoUsuari
     Route::delete('/{servicio}', [ServicioController::class, "destroy"])->name("servicio.destroy");
     Route::get('/{servicio}/conductores', [ServicioController::class, 'obtenerConductores'])->name('servicio.obtenerConductores');
     Route::get('/{servicio}/vehiculos', [ServicioController::class, 'obtenerVehiculos'])->name('servicio.obtenerVehiculos');
+});
+
+Route::group(['prefix' => 'rutas', 'middleware' => ['auth', 'verEstadoUsuario']], function () {
+    Route::get('/', [RutaController::class, "index"])->name("ruta.index");
+    Route::post('/', [RutaController::class, "store"])->name("ruta.store");
+    Route::get('/editar/{ruta}', [RutaController::class, "edit"])->name("ruta.edit");
+    Route::put('/{ruta}', [RutaController::class, 'update'])->name('ruta.update');
+    Route::delete('/{ruta}', [RutaController::class, "destroy"])->name("ruta.destroy");
 });
 
 Route::group(['prefix' => 'vehiculos', 'middleware' => ['auth', 'verEstadoUsuario']], function () {

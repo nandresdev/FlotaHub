@@ -36,4 +36,9 @@ class Servicios extends Model
     {
         return $this->hasMany(DocumentosServicios::class, "id_servicios");
     }
+
+    public function ruta()
+    {
+        return $this->hasMany(Rutas::class, "id_servicio");
+    }
 }

@@ -31,7 +31,6 @@ class ServicioController extends Controller
         $servicios->nombre = $request->input('nombre');
         $servicios->fecha_inicio = $request->input('fecha_inicio');
         $servicios->fecha_fin = $request->input('fecha_fin');
-        $servicios->save();
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');

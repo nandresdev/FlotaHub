@@ -299,7 +299,7 @@ return [
                 ],
                 [
                     'text'  => 'Registro de Ruta',
-                    'url'  => '',
+                    'url'  => 'rutas/',
                 ],
             ],
         ],
