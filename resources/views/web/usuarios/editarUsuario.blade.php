@@ -178,7 +178,7 @@
         }
 
         function editarUsuario() {
-            document.getElementById("botonDeEditar").setAttribute("disabled", "disabled");
+            document.getElementById("botonDeEditar");
 
             const formElement = document.getElementById("formularioDeUsuario");
             const formData = new FormData(formElement);
@@ -205,7 +205,6 @@
                 error: function(data) {
                     console.log(data);
                     validarCampos(data);
-                    document.getElementById("botonDeEditar").removeAttribute("disabled");
                 }
             });
         }

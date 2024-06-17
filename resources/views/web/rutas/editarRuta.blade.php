@@ -90,7 +90,7 @@
         }
 
         function editarRuta() {
-            document.getElementById("botonDeEditar").setAttribute("disabled", "true");
+            document.getElementById("botonDeEditar");
 
             const formElement = document.getElementById("formularioDeRuta");
             const formData = new FormData(formElement);
@@ -117,7 +117,6 @@
                 error: function(data) {
                     console.log(data);
                     validarCampos(data);
-                    document.getElementById("botonDeEditar").removeAttribute("disabled");
                 },
             });
         }

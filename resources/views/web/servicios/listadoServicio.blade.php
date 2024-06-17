@@ -199,29 +199,33 @@
         });
 
         function validarCampos(data) {
-            if (data.responseJSON && data.responseJSON.errors && data.responseJSON.errors.nombre) {
+            if (typeof data.responseJSON.errors.nombre !== 'undefined') {
                 document.getElementById("nombre").classList.add("is-invalid");
                 document.getElementById("inputValidacionNombre").innerHTML = data.responseJSON.errors.nombre;
             } else {
                 document.getElementById("nombre").classList.remove("is-invalid");
+                document.getElementById("nombre").classList.add("is-valid");
                 document.getElementById("inputValidacionNombre").innerHTML = "";
             }
 
-            if (data.responseJSON && data.responseJSON.errors && data.responseJSON.errors.fecha_inicio) {
+            if (typeof data.responseJSON.errors.fecha_inicio !== 'undefined') {
                 document.getElementById("campoFechaInicio").classList.add("is-invalid");
                 document.getElementById("inputValidacionFechaInicio").innerHTML = data.responseJSON.errors.fecha_inicio;
             } else {
                 document.getElementById("campoFechaInicio").classList.remove("is-invalid");
+                document.getElementById("campoFechaInicio").classList.add("is-valid");
                 document.getElementById("inputValidacionFechaInicio").innerHTML = "";
             }
 
-            if (data.responseJSON && data.responseJSON.errors && data.responseJSON.errors.fecha_fin) {
+            if (typeof data.responseJSON.errors.fecha_fin !== 'undefined') {
                 document.getElementById("campoFechaFin").classList.add("is-invalid");
                 document.getElementById("inputValidacionFechaFin").innerHTML = data.responseJSON.errors.fecha_fin;
             } else {
                 document.getElementById("campoFechaFin").classList.remove("is-invalid");
+                document.getElementById("campoFechaFin").classList.add("is-valid");
                 document.getElementById("inputValidacionFechaFin").innerHTML = "";
             }
+
 
             if (data.responseJSON && data.responseJSON.errors && data.responseJSON.errors.foto) {
                 document.getElementById("campoArchivosSubirDocumento").classList.add("is-invalid");
@@ -265,7 +269,6 @@
                 error: function(data) {
                     console.log(data);
                     validarCampos(data);
-                    document.getElementById("botonDeCreacion").removeAttribute("disabled");
                 }
             });
         }
